@@ -1,0 +1,96 @@
+apiVersion: ray.io/v1
+kind: RayCluster
+metadata:
+  annotations:
+    meta.helm.sh/release-name: raycluster
+    meta.helm.sh/release-namespace: kuberay-operator
+  generation: 3
+  labels:
+    app.kubernetes.io/instance: raycluster
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: ray-cluster-1.2.2
+  name: raycluster-kuberay
+  namespace: kuberay-operator
+spec:
+  headGroupSpec:
+    rayStartParams:
+      dashboard-host: 0.0.0.0
+    serviceType: ClusterIP
+    template:
+      metadata:
+        annotations: {}
+        labels:
+          app.kubernetes.io/instance: raycluster
+          app.kubernetes.io/managed-by: Helm
+          helm.sh/chart: ray-cluster-1.2.2
+      spec:
+        affinity: {}
+        containers:
+        - image: docker.1ms.run/rayproject/ray-ml:2.11.0.a464b6-py310-gpu
+          imagePullPolicy: IfNotPresent
+          name: ray-head
+          resources:
+            limits:
+              cpu: "4"
+              memory: 16G
+            requests:
+              cpu: "1"
+              memory: 2G
+          securityContext: {}
+          volumeMounts:
+          - mountPath: /tmp/ray
+            name: log-volume
+          - mountPath: /mnt/deepseek
+            name: deepseek-r1
+        imagePullSecrets: []
+        nodeSelector: {}
+        tolerations: []
+        volumes:
+        - emptyDir: {}
+          name: log-volume
+        - name: deepseek-r1
+          persistentVolumeClaim:
+            claimName: deepseek
+  workerGroupSpecs:
+  - groupName: workergroup
+    maxReplicas: 3
+    minReplicas: 1
+    numOfHosts: 1
+    rayStartParams:
+      num-gpus: "1"
+    replicas: 1
+    template:
+      metadata:
+        annotations: {}
+        labels:
+          app.kubernetes.io/instance: raycluster
+          app.kubernetes.io/managed-by: Helm
+          helm.sh/chart: ray-cluster-1.2.2
+      spec:
+        affinity: {}
+        containers:
+        - image: docker.1ms.run/rayproject/ray-ml:2.11.0.a464b6-py310-gpu
+          imagePullPolicy: IfNotPresent
+          name: ray-worker
+          resources:
+            limits:
+              cpu: "14"
+              memory: 60G
+            requests:
+              cpu: "1"
+              memory: 1G
+          securityContext: {}
+          volumeMounts:
+          - mountPath: /tmp/ray
+            name: log-volume
+          - mountPath: /mnt/deepseek
+            name: deepseek-r1
+        imagePullSecrets: []
+        nodeSelector: {}
+        tolerations: []
+        volumes:
+        - emptyDir: {}
+          name: log-volume
+        - name: deepseek-r1
+          persistentVolumeClaim:
+            claimName: deepseek
