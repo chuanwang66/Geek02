@@ -1,0 +1,170 @@
+#文件名（含路径）：
+src/handlers/UserHandler.go
+#文件注释：
+gin 的关于用户User的路由处理函数
+#package:
+handlers
+#引用包：
+net/http
+github.com/gin-demo/src/config
+github.com/gin-demo/src/models
+github.com/gin-gonic/gin
+#struct定义：
+(该文件中没有struct定义)
+#函数列表：
+##函数注释：GetUsers 获取所有用户
+函数入参：c *gin.Context
+函数返回值：无
+函数功能：获取数据库中所有用户信息并以JSON格式返回
+##函数注释：GetUser 获取单个用户
+函数入参：c *gin.Context
+函数返回值：无
+函数功能：根据URL参数中的id获取指定用户信息并以JSON格式返回
+##函数注释：CreateUser 创建用户
+函数入参：c *gin.Context
+函数返回值：无
+函数功能：从请求体获取用户信息，创建新用户并存入数据库，返回创建的用户信息
+##函数注释：UpdateUser 更新用户
+函数入参：c *gin.Context
+函数返回值：无
+函数功能：根据URL参数中的id更新指定用户信息，返回更新后的用户信息
+##函数注释：DeleteUser 删除用户
+函数入参：c *gin.Context
+函数返回值：无
+函数功能：根据URL参数中的id删除指定用户，返回删除成功的消息
+
+#文件名（含路径）：
+src/models/ProductModel.go
+#文件注释：
+gin 的关于产品Product的模型
+#package:
+models
+#引用包：
+time
+#struct定义：
+##struct名称：Product
+字段（含类型）：
+ID uint (json:"id" gorm:"primaryKey")
+Name string (json:"name" gorm:"not null")
+Description string (json:"description")
+Price float64 (json:"price" gorm:"not null")
+Stock int (json:"stock" gorm:"not null")
+CreatedAt time.Time (json:"created_at")
+UpdatedAt time.Time (json:"updated_at")
+用途：定义产品数据模型，用于数据库交互和JSON序列化
+#函数列表：
+##函数注释：TableName 指定表名
+函数入参：Product (receiver)
+函数返回值：string
+函数功能：指定该模型在数据库中对应的表名为"products"
+
+#文件名（含路径）：
+src/config/database.go
+#文件注释：
+gin 的关于数据库的配置
+#package:
+config
+#引用包：
+fmt
+log
+gorm.io/driver/mysql
+gorm.io/gorm
+#变量定义：
+DB *gorm.DB (全局变量，用于存储数据库连接实例)
+#struct定义：
+(该文件中没有struct定义)
+#函数列表：
+##函数注释：(无显式注释)
+函数名称：InitDB
+函数入参：无
+函数返回值：无
+函数功能：初始化数据库连接，连接到MySQL数据库，并将连接实例存储在全局变量DB中。如果连接失败则输出错误日志，连接成功则打印成功消息。
+
+#文件名（含路径）：
+src/models/ProductModel.go
+#文件注释：
+gin 的关于产品Product的模型
+#package:
+models
+#引用包：
+time
+#struct定义：
+##struct名称：Product
+字段（含类型）：
+ID uint (json:"id" gorm:"primaryKey")
+Name string (json:"name" gorm:"not null")
+Description string (json:"description")
+Price float64 (json:"price" gorm:"not null")
+Stock int (json:"stock" gorm:"not null")
+CreatedAt time.Time (json:"created_at")
+UpdatedAt time.Time (json:"updated_at")
+用途：定义产品数据模型，用于数据库交互和JSON序列化
+#函数列表：
+##函数注释：TableName 指定表名
+函数入参：Product (receiver)
+函数返回值：string
+函数功能：指定该模型在数据库中对应的表名为"products"
+
+#文件名（含路径）：
+src/models/UserModel.go
+#文件注释：
+gin 的关于用户User的模型
+#package:
+models
+#引用包：
+time
+#struct定义：
+##struct名称：User
+字段（含类型）：
+ID uint (json:"id" gorm:"primaryKey")
+Username string (json:"username" gorm:"unique;not null")
+Email string (json:"email" gorm:"unique;not null")
+Password string (json:"-" gorm:"not null") // 密码字段在JSON中不显示
+CreatedAt time.Time (json:"created_at")
+UpdatedAt time.Time (json:"updated_at")
+用途：定义用户数据模型，用于数据库交互和JSON序列化
+#函数列表：
+##函数注释：TableName 指定表名
+函数入参：User (receiver)
+函数返回值：string
+函数功能：指定该模型在数据库中对应的表名为"users"
+
+#文件名（含路径）：
+main.go
+#文件注释：
+gin 的入口文件
+#package:
+main
+#引用包：
+log
+github.com/gin-demo/src/config
+github.com/gin-demo/src/handlers
+github.com/gin-gonic/gin
+#struct定义：
+(该文件中没有struct定义)
+#函数列表：
+##函数注释：(无显式注释)
+函数名称：main
+函数入参：无
+函数返回值：无
+函数功能：
+初始化数据库连接
+创建gin路由引擎
+设置API路由组（/api）并配置以下路由：
+用户相关路由（GET/POST/PUT/DELETE）
+产品相关路由（GET/POST/PUT/DELETE）
+在8080端口启动HTTP服务器
+
+#文件名（含路径）：
+go.mod
+#文件注释：
+(无文件注释)
+#package:
+(go.mod文件不包含package声明)
+#模块信息：
+模块名：github.com/gin-demo
+Go版本：1.20
+#主要依赖包：
+github.com/gin-gonic/gin v1.9.1
+gorm.io/driver/mysql v1.5.2
+gorm.io/gorm v1.25.5
