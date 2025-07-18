@@ -18,6 +18,8 @@ Action Input: the input to the action
 
 Then wait for Human will response to you the result of action by use Observation.
 ... (this Thought/Action/Action Input/Observation can repeat N times)
+(only 1 Thought/Action/Action Input should be output each time)
+
 When you have a response to say to the Human, or if you do not need to use a tool, you MUST use the format:
 
 ```

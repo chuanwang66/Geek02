@@ -12,7 +12,7 @@ def send_messages(messages):
     return response
 
 if __name__ == "__main__":
-    instructions = "你是一个股票助手，可以回答股票相关的问题"
+    instructions = "你是一个股票助手，可以回答股票相关的问题。具体的股价值等人类去查询，请你不要瞎编"
 
     query = "青岛啤酒和贵州茅台的收盘价哪个贵？"
     

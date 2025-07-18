@@ -16,9 +16,10 @@ tools = [
 ]
 
 def get_closing_price(name):
-    if name == "青岛啤酒":
-        return "67.92"
-    elif name == "贵州茅台":
-        return "1488.21"
-    else:
-        return "未搜到该股票"
+    # if name == "青岛啤酒":
+    #     return "67.92"
+    # elif name == "贵州茅台":
+    #     return "1488.21"
+    # else:
+    #     return "未搜到该股票"
+    return input("请人类手动查阅 %s 的股价，并输入:" % name)
